@@ -1,5 +1,5 @@
 const tripForm = document.getElementById("tripForm");
-const packingResults = document.getElementById("packingResults");
+constpackingResults = document.getElementById("packingResults");
 
 const packingLists = {
     beach: [
@@ -18,8 +18,8 @@ const packingLists = {
         "Small backpack",
         "Travel wallet",
         "Casual outfits",
-        "Reusable water bottle",
-        "Camera or phone"
+        "Rusable water bottle",
+        "Camera or phone" 
     ],
 
     mountain: [
@@ -58,36 +58,68 @@ tripForm.addEventListener("submit", function(event) {
 
     const tripType = document.getElementById("tripType").value;
     const weather = document.getElementById("weather").value;
-    const days = document.getElementById("days").value;
+    const days = Number(document.getElementById("days").value);
     const activity = document.getElementById("activity").value;
 
-    if (!tripType || !weather || !days || !activity) {
+    if (!tripType  || !weather || !days || !activity) {
         packingResults.innerHTML = `
         <p class = "empty-message">Please fill out all trip details.</p>
         `;
         return;
     }
 
+    if (days < 1 || days > 30) {
+        packingResults.innerHTML = `
+        <p class = "empty-message">Please enter a trip length between 1 and 30 days.</p>
+        `;
+        return;
+    }
+
     const selectedPackingList = packingLists[tripType];
+    const clothingList = createClothingList(days);
 
-    let packingItemsHTML = "";
-
-    selectedPackingList.forEach(function(item) {
-        packingItemsHTML += `<li>${item}</li>`;
-    });
+    const tripItemsHTML = createListItems(selectedPackingList);
+    const clothingItemsHTML = createListItems(clothingList);
 
     packingResults.innerHTML = `
     <p><strong>Trip Type:</strong> ${formatText(tripType)}</p>
     <p><strong>Weather:</strong> ${formatText(weather)}</p>
     <p><strong>Days:</strong> ${days}</p>
     <p><strong>Main Activity:</strong> ${formatText(activity)}</p>
+    
+    <h3>Clothing</h3>
+    <ul>
+    ${clothingItemsHTML}
+    </ul>
 
     <h3>Recommended Items</h3>
     <ul>
-        ${packingItemsHTML}
+        ${tripItemsHTML}
     </ul>
     `;
 });
+
+function createClothingList(days) {
+    const pantsCount = Math.ceil(days / 2);
+
+    return [
+        `${days} shirts`,
+        `${days} pairs of underwear`,
+        `${days} pairs of socks`,
+        `${pantsCount} pants or shorts`,
+        "1 sleepwear",
+        "1 extra outfit"
+    ];
+}
+
+function createListItems(items) {
+    let listHTML = "";
+    items.forEach(function(item) {
+        listHTML += `<li>${item}</li>`;
+    });
+
+    return listHTML;
+}
 
 function formatText(text) {
     return text.charAt(0).toUpperCase() + text.slice(1);
