@@ -87,3 +87,17 @@ button:hover {
     color: #777;
     font-style: italic;
 }
+
+#packingResults h3 {
+    margin-top: 20px;
+    color: #3f2a16;
+}
+
+#packingResults ul {
+    padding-left: 22px;
+}
+
+#packingResults li {
+    margin-bottom: 8px;
+    font-size: 16px;
+}
