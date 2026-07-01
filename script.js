@@ -1,6 +1,8 @@
 const tripForm = document.getElementById("tripForm");
 const packingResults = document.getElementById("packingResults");
 
+const STORAGE_KEY = "savedPackingItems";
+
 const packingLists = {
   beach: [
     "Swimsuit",
@@ -165,37 +167,46 @@ tripForm.addEventListener("submit", function(event) {
   const selectedActivityList = activityLists[activity];
   const selectedPackingList = packingLists[tripType];
 
-  const clothingItemsHTML = createListItems(clothingList);
-  const weatherItemsHTML = createListItems(selectedWeatherList);
-  const activityItemsHTML = createListItems(selectedActivityList);
-  const tripItemsHTML = createListItems(selectedPackingList);
-
   packingResults.innerHTML = `
     <p><strong>Trip Type:</strong> ${formatText(tripType)}</p>
     <p><strong>Weather:</strong> ${formatText(weather)}</p>
     <p><strong>Days:</strong> ${days}</p>
     <p><strong>Main Activity:</strong> ${formatText(activity)}</p>
 
+    <div class="packing-progress">
+      <p id="progressText">0 items packed</p>
+      <button type="button" id="clearSavedListBtn" class="secondary-button">
+        Clear Saved List
+      </button>
+    </div>
+
     <h3>Clothing</h3>
     <ul>
-      ${clothingItemsHTML}
+      ${createListItems(clothingList)}
     </ul>
 
     <h3>Weather Items</h3>
     <ul>
-      ${weatherItemsHTML}
+      ${createListItems(selectedWeatherList)}
     </ul>
 
     <h3>Activity Items</h3>
     <ul>
-      ${activityItemsHTML}
+      ${createListItems(selectedActivityList)}
     </ul>
 
     <h3>Trip Type Items</h3>
     <ul>
-      ${tripItemsHTML}
+      ${createListItems(selectedPackingList)}
     </ul>
   `;
+
+  setupCheckboxSaving();
+  updateProgressText();
+
+  document
+    .getElementById("clearSavedListBtn")
+    .addEventListener("click", clearSavedList);
 });
 
 function createClothingList(days) {
@@ -213,12 +224,83 @@ function createClothingList(days) {
 
 function createListItems(items) {
   let listHTML = "";
+  const savedItems = getSavedItems();
 
   items.forEach(function(item) {
-    listHTML += `<li>${item}</li>`;
+    const itemId = createItemId(item);
+    const checkedText = savedItems.includes(itemId) ? "checked" : "";
+
+    listHTML += `
+      <li class="packing-item">
+        <label>
+          <input 
+            type="checkbox" 
+            data-item-id="${itemId}" 
+            ${checkedText}
+          />
+          <span>${item}</span>
+        </label>
+      </li>
+    `;
   });
 
   return listHTML;
+}
+
+function setupCheckboxSaving() {
+  const checkboxes = document.querySelectorAll(".packing-item input");
+
+  checkboxes.forEach(function(checkbox) {
+    checkbox.addEventListener("change", function() {
+      saveCheckedItems();
+      updateProgressText();
+    });
+  });
+}
+
+function saveCheckedItems() {
+  const checkedBoxes = document.querySelectorAll(".packing-item input:checked");
+  const checkedItemIds = [];
+
+  checkedBoxes.forEach(function(checkbox) {
+    checkedItemIds.push(checkbox.dataset.itemId);
+  });
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(checkedItemIds));
+}
+
+function getSavedItems() {
+  const savedItems = localStorage.getItem(STORAGE_KEY);
+
+  if (!savedItems) {
+    return [];
+  }
+
+  return JSON.parse(savedItems);
+}
+
+function updateProgressText() {
+  const progressText = document.getElementById("progressText");
+  const allCheckboxes = document.querySelectorAll(".packing-item input");
+  const checkedBoxes = document.querySelectorAll(".packing-item input:checked");
+
+  progressText.textContent = `${checkedBoxes.length} of ${allCheckboxes.length} items packed`;
+}
+
+function clearSavedList() {
+  localStorage.removeItem(STORAGE_KEY);
+
+  const checkboxes = document.querySelectorAll(".packing-item input");
+
+  checkboxes.forEach(function(checkbox) {
+    checkbox.checked = false;
+  });
+
+  updateProgressText();
+}
+
+function createItemId(item) {
+  return item.toLowerCase().replaceAll(" ", "-");
 }
 
 function formatText(text) {
