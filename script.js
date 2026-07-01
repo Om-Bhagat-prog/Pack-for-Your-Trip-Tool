@@ -91,6 +91,53 @@ const weatherLists = {
   ]
 };
 
+const activityLists = {
+  sightseeing: [
+    "Comfortable walking shoes",
+    "Small backpack",
+    "Phone charger",
+    "Camera or phone",
+    "Reusable water bottle",
+    "Local map or saved directions"
+  ],
+
+  hiking: [
+    "Trail shoes",
+    "Trail snacks",
+    "Small first aid kit",
+    "Map or offline GPS",
+    "Reusable water bottle",
+    "Backpack"
+  ],
+
+  swimming: [
+    "Swimsuit",
+    "Towel",
+    "Goggles",
+    "Waterproof phone pouch",
+    "Flip flops",
+    "Plastic bag for wet clothes"
+  ],
+
+  business: [
+    "Formal outfit",
+    "Dress shoes",
+    "Notebook",
+    "Laptop or tablet",
+    "Phone charger",
+    "Travel-size lint roller"
+  ],
+
+  relaxing: [
+    "Comfortable clothes",
+    "Book or e-reader",
+    "Headphones",
+    "Travel pillow",
+    "Journal",
+    "Reusable water bottle"
+  ]
+};
+
 tripForm.addEventListener("submit", function(event) {
   event.preventDefault();
 
@@ -113,12 +160,14 @@ tripForm.addEventListener("submit", function(event) {
     return;
   }
 
-  const selectedPackingList = packingLists[tripType];
-  const selectedWeatherList = weatherLists[weather];
   const clothingList = createClothingList(days);
+  const selectedWeatherList = weatherLists[weather];
+  const selectedActivityList = activityLists[activity];
+  const selectedPackingList = packingLists[tripType];
 
   const clothingItemsHTML = createListItems(clothingList);
   const weatherItemsHTML = createListItems(selectedWeatherList);
+  const activityItemsHTML = createListItems(selectedActivityList);
   const tripItemsHTML = createListItems(selectedPackingList);
 
   packingResults.innerHTML = `
@@ -135,6 +184,11 @@ tripForm.addEventListener("submit", function(event) {
     <h3>Weather Items</h3>
     <ul>
       ${weatherItemsHTML}
+    </ul>
+
+    <h3>Activity Items</h3>
+    <ul>
+      ${activityItemsHTML}
     </ul>
 
     <h3>Trip Type Items</h3>
