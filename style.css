@@ -170,3 +170,64 @@ button:hover {
         width: 100%;
     }
 }
+
+.packing-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+    .packing-progress {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .secondary-button {
+        width: 100%;
+    }
+
+    .packing-actions {
+        width: 100%;
+    }
+
+    .packing-actions .secondary-button {
+        width: 100%;
+    }
+}
+
+@media print {
+    body {
+        background: white;
+    }
+
+    .hero,
+    form,
+    .packing-actions {
+        display: none;
+    }
+
+    .container {
+        width: 100%;
+        max-width: none;
+        padding: 0;
+    }
+
+    .card {
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+    .results {
+        min-height: auto;
+    }
+
+    .packing-item input {
+        display: none;
+    }
+
+    .packing-item span {
+        color: black;
+        text-decoration: none;
+    }
+}

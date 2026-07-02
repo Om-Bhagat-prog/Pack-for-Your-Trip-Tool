@@ -173,12 +173,23 @@ tripForm.addEventListener("submit", function(event) {
     <p><strong>Days:</strong> ${days}</p>
     <p><strong>Main Activity:</strong> ${formatText(activity)}</p>
 
-    <div class="packing-progress">
-      <p id="progressText">0 items packed</p>
-      <button type="button" id="clearSavedListBtn" class="secondary-button">
-        Clear Saved List
+    <div class = "packing-progress">
+      <p id = "progressText">0 items packed</p>
+
+      <div class = "packing-actions">
+        <button type="button" id = "printListBtn" class = "secondary-button">
+        Print List
       </button>
-    </div>
+    
+      <button type = "button" id = "clearSavedListBtn" class = "secondary-button">
+      Clear Saved List
+    </button>
+
+    <button type = "button" id = "startOverBtn" class = "secondary-button">
+      Start Over
+    </button>
+  </div>
+  </div>
 
     <h3>Clothing</h3>
     <ul>
@@ -205,8 +216,16 @@ tripForm.addEventListener("submit", function(event) {
   updateProgressText();
 
   document
-    .getElementById("clearSavedListBtn")
-    .addEventListener("click", clearSavedList);
+  .getElementById("printListBtn")
+  .addEventListener("click", printPackingList);
+
+  document
+  .getElementById("clearSavedListBtn")
+  .addEventListener("click", clearSavedList);
+
+  document
+  .getElementById("startOverBtn")
+  .addEventListener("click", startOver);
 });
 
 function createClothingList(days) {
@@ -301,6 +320,18 @@ function clearSavedList() {
 
 function createItemId(item) {
   return item.toLowerCase().replaceAll(" ", "-");
+}
+
+function printPackingList() {
+  window.print();
+}
+
+function startOver() {
+  tripForm.reset();
+
+  packingResults.innerHTML = `
+    <p class = "empty-message">Your packing list will appear here.</p>
+  `;
 }
 
 function formatText(text) {
