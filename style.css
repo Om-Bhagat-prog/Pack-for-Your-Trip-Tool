@@ -231,3 +231,95 @@ button:hover {
         text-decoration: none;
     }
 }
+
+.trip-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.trip-summary div {
+    background: #f4efe7;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #e0d3bf;
+}
+
+.trip-summary span {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    color: #6f6252;
+}
+
+.trip-summary strong {
+    display: block;
+    color: #3f2a16;
+    font-size: 16px;
+}
+
+.packing-section {
+    margin-top: 18px;
+    padding: 16px;
+    border: 1px solid #eadfce;
+    border-radius: 12px;
+    background: #fffaf3;
+}
+
+.packing-section h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.packing-secction ul {
+    margin-bottom: 0;
+}
+
+@media (max-width: 800px) {
+    .trip.summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .trip-summary {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media print {
+    body {
+        background: white;
+    }
+
+    .hero,
+    form,
+    .packing-actions {
+        display: none;
+    }
+
+    .container {
+        width: 100%;
+        max-width: none;
+        padding: 0;
+    }
+
+    .card {
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+    .results {
+        min-height: auto;
+    }
+
+    .packing-item input {
+        display: none;
+    }
+
+    .packing-item span {
+        color: black;
+        text-decoration: none;
+    }
+}

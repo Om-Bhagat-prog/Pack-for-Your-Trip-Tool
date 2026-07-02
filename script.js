@@ -168,50 +168,74 @@ tripForm.addEventListener("submit", function(event) {
   const selectedPackingList = packingLists[tripType];
 
   packingResults.innerHTML = `
-    <p><strong>Trip Type:</strong> ${formatText(tripType)}</p>
-    <p><strong>Weather:</strong> ${formatText(weather)}</p>
-    <p><strong>Days:</strong> ${days}</p>
-    <p><strong>Main Activity:</strong> ${formatText(activity)}</p>
+  <div class="trip-summary">
+    <div>
+      <span>Trip Type</span>
+      <strong>${formatText(tripType)}</strong>
+    </div>
 
-    <div class = "packing-progress">
-      <p id = "progressText">0 items packed</p>
+    <div>
+      <span>Weather</span>
+      <strong>${formatText(weather)}</strong>
+    </div>
 
-      <div class = "packing-actions">
-        <button type="button" id = "printListBtn" class = "secondary-button">
+    <div>
+      <span>Length</span>
+      <strong>${days} days</strong>
+    </div>
+
+    <div>
+      <span>Main Activity</span>
+      <strong>${formatText(activity)}</strong>
+    </div>
+  </div>
+
+  <div class="packing-progress">
+    <p id="progressText">0 items packed</p>
+
+    <div class="packing-actions">
+      <button type="button" id="printListBtn" class="secondary-button">
         Print List
       </button>
-    
-      <button type = "button" id = "clearSavedListBtn" class = "secondary-button">
-      Clear Saved List
-    </button>
 
-    <button type = "button" id = "startOverBtn" class = "secondary-button">
-      Start Over
-    </button>
-  </div>
+      <button type="button" id="clearSavedListBtn" class="secondary-button">
+        Clear Saved List
+      </button>
+
+      <button type="button" id="startOverBtn" class="secondary-button">
+        Start Over
+      </button>
+    </div>
   </div>
 
+  <div class="packing-section">
     <h3>Clothing</h3>
     <ul>
       ${createListItems(clothingList)}
     </ul>
+  </div>
 
+  <div class="packing-section">
     <h3>Weather Items</h3>
     <ul>
       ${createListItems(selectedWeatherList)}
     </ul>
+  </div>
 
+  <div class="packing-section">
     <h3>Activity Items</h3>
     <ul>
       ${createListItems(selectedActivityList)}
     </ul>
+  </div>
 
+  <div class="packing-section">
     <h3>Trip Type Items</h3>
     <ul>
       ${createListItems(selectedPackingList)}
     </ul>
-  `;
-
+  </div>
+`;
   setupCheckboxSaving();
   updateProgressText();
 
