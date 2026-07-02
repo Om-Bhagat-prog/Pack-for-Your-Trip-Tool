@@ -168,88 +168,89 @@ tripForm.addEventListener("submit", function(event) {
   const selectedPackingList = packingLists[tripType];
 
   packingResults.innerHTML = `
-  <div class="trip-summary">
-    <div>
-      <span>Trip Type</span>
-      <strong>${formatText(tripType)}</strong>
+    <div class="trip-summary">
+      <div>
+        <span>Trip Type</span>
+        <strong>${formatText(tripType)}</strong>
+      </div>
+
+      <div>
+        <span>Weather</span>
+        <strong>${formatText(weather)}</strong>
+      </div>
+
+      <div>
+        <span>Length</span>
+        <strong>${days} days</strong>
+      </div>
+
+      <div>
+        <span>Main Activity</span>
+        <strong>${formatText(activity)}</strong>
+      </div>
     </div>
 
-    <div>
-      <span>Weather</span>
-      <strong>${formatText(weather)}</strong>
+    <div class="packing-progress">
+      <p id="progressText">0 items packed</p>
+
+      <div class="packing-actions">
+        <button type="button" id="printListBtn" class="secondary-button">
+          Print List
+        </button>
+
+        <button type="button" id="clearSavedListBtn" class="secondary-button">
+          Clear Saved List
+        </button>
+
+        <button type="button" id="startOverBtn" class="secondary-button">
+          Start Over
+        </button>
+      </div>
     </div>
 
-    <div>
-      <span>Length</span>
-      <strong>${days} days</strong>
+    <div class="packing-section">
+      <h3>Clothing</h3>
+      <ul>
+        ${createListItems(clothingList)}
+      </ul>
     </div>
 
-    <div>
-      <span>Main Activity</span>
-      <strong>${formatText(activity)}</strong>
+    <div class="packing-section">
+      <h3>Weather Items</h3>
+      <ul>
+        ${createListItems(selectedWeatherList)}
+      </ul>
     </div>
-  </div>
 
-  <div class="packing-progress">
-    <p id="progressText">0 items packed</p>
-
-    <div class="packing-actions">
-      <button type="button" id="printListBtn" class="secondary-button">
-        Print List
-      </button>
-
-      <button type="button" id="clearSavedListBtn" class="secondary-button">
-        Clear Saved List
-      </button>
-
-      <button type="button" id="startOverBtn" class="secondary-button">
-        Start Over
-      </button>
+    <div class="packing-section">
+      <h3>Activity Items</h3>
+      <ul>
+        ${createListItems(selectedActivityList)}
+      </ul>
     </div>
-  </div>
 
-  <div class="packing-section">
-    <h3>Clothing</h3>
-    <ul>
-      ${createListItems(clothingList)}
-    </ul>
-  </div>
+    <div class="packing-section">
+      <h3>Trip Type Items</h3>
+      <ul>
+        ${createListItems(selectedPackingList)}
+      </ul>
+    </div>
+  `;
 
-  <div class="packing-section">
-    <h3>Weather Items</h3>
-    <ul>
-      ${createListItems(selectedWeatherList)}
-    </ul>
-  </div>
-
-  <div class="packing-section">
-    <h3>Activity Items</h3>
-    <ul>
-      ${createListItems(selectedActivityList)}
-    </ul>
-  </div>
-
-  <div class="packing-section">
-    <h3>Trip Type Items</h3>
-    <ul>
-      ${createListItems(selectedPackingList)}
-    </ul>
-  </div>
-`;
   setupCheckboxSaving();
   updateProgressText();
 
   document
-  .getElementById("printListBtn")
-  .addEventListener("click", printPackingList);
+    .getElementById("printListBtn")
+    .addEventListener("click", printPackingList);
 
   document
-  .getElementById("clearSavedListBtn")
-  .addEventListener("click", clearSavedList);
+    .getElementById("clearSavedListBtn")
+    .addEventListener("click", clearSavedList);
 
   document
-  .getElementById("startOverBtn")
-  .addEventListener("click", startOver);
+    .getElementById("startOverBtn")
+    .addEventListener("click", startOver);
 });
 
 function createClothingList(days) {
@@ -354,7 +355,7 @@ function startOver() {
   tripForm.reset();
 
   packingResults.innerHTML = `
-    <p class = "empty-message">Your packing list will appear here.</p>
+    <p class="empty-message">Your packing list will appear here.</p>
   `;
 }
 
